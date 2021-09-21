@@ -1,19 +1,17 @@
 import React from 'react';
-import './App.css';
-import rockGlass from './images/rockGlass.svg';
+import { Switch, Route } from 'react-router';
+
+import { Login } from './pages';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 function App() {
   return (
     <div className="meals">
-      <span className="logo">TRYBE</span>
-      <object
-        className="rocksGlass"
-        type="image/svg+xml"
-        data={ rockGlass }
-      >
-        Glass
-      </object>
+      <Switch>
+        <Route path="/" component={ Login } />
+      </Switch>
     </div>
   );
 }
