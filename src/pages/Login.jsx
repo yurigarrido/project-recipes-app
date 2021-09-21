@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [enable, setEnable] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     const validateEmail = () => {
@@ -28,10 +30,11 @@ const Login = () => {
       email,
     };
 
-    console.log('oi');
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktailsToken', '1');
     localStorage.setItem('user', JSON.stringify(user));
+
+    history.push('/comidas');
   }
 
   return (
