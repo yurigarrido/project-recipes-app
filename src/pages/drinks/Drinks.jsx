@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Header, Footer } from '../../components';
+import recipesContext from '../../context/recipesContext';
 
-const Drinks = () => (
-  <div>
-    <Header title="Bebidas" />
-    <Footer />
-  </div>
-);
+const Drinks = () => {
+  const state = useContext(recipesContext);
+
+  useEffect(() => {
+    console.log(state.setPageName('bebidas'));
+  }, [state]);
+  return (
+    <div>
+      <Header title="Bebidas" />
+      <Footer />
+    </div>
+  );
+};
 
 export default Drinks;
