@@ -1,9 +1,10 @@
 import React from 'react';
-import { Header } from '../../components';
+import { Header, Footer } from '../../components';
 
 const ExploreFoodArea = () => (
   <div>
     <Header title="Explorar Origem" />
+    <Footer />
   </div>
 );
 
