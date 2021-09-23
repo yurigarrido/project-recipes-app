@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import useFetch from '../hooks/useFetch';
-import recipesContext from '../context/recipesContext';
+import { GlobalContext } from '../context/GlobalStorage';
 
 const SearchBar = () => {
   const [searchInput, setSearchInput] = useState('');
@@ -9,7 +9,7 @@ const SearchBar = () => {
   const FIRST_LETTER = 'first-letter';
   const INGREDIENTS = 'ingredients';
   const NAME = 'name';
-  const state = useContext(recipesContext);
+  const state = useContext(GlobalContext);
 
   const ifHandle = async (op, method) => {
     if (state.pageName === 'comidas') {

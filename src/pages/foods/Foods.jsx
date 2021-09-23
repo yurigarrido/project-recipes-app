@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { Header, Footer } from '../../components';
-import recipesContext from '../../context/recipesContext';
+import { GlobalContext } from '../../context/GlobalStorage';
 
 const Foods = () => {
-  const state = useContext(recipesContext);
+  const state = useContext(GlobalContext);
 
   useEffect(() => {
-    console.log(state.setPageName('comidas'));
+    state.setPageName('comidas');
+    console.log(state.pageName);
   }, [state]);
 
   return (

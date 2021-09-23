@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router';
-import recipesContext from './context/recipesContext';
+import GlobalStorage from './context/GlobalStorage';
 
 import { Login, Foods, Profile, Drinks, DrinkRecipe,
   FoodRecipe, DrinkProgress, ExploreFood, Explore, ExploreDrink, ExploreFoodIng,
@@ -10,12 +10,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
-  const [pageName, setPageName] = useState('oi');
-
   return (
     <div className="meals">
       <Switch>
-        <recipesContext.Provider value={ { pageName, setPageName } }>
+        <GlobalStorage>
           <Route exact path="/" component={ Login } />
           <Route path="/perfil" component={ Profile } />
 
@@ -40,7 +38,7 @@ function App() {
           {/* Export Recipes */}
           <Route path="/receitas-feitas" component={ RecipesDone } />
           <Route path="/receitas-favoritas" component={ RecipesFav } />
-        </recipesContext.Provider>
+        </GlobalStorage>
       </Switch>
     </div>
   );
