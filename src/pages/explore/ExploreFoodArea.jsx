@@ -3,11 +3,11 @@ import { Header, Footer } from '../../components';
 import { GlobalContext } from '../../context/GlobalStorage';
 
 const ExploreFoodArea = () => {
-  const state = useContext(GlobalContext);
+  const GLOBAL = useContext(GlobalContext);
 
   useEffect(() => {
-    console.log(state.setPageName('comidas'));
-  }, [state]);
+    GLOBAL.setPageName('comidas');
+  }, [GLOBAL]);
 
   return (
     <div>

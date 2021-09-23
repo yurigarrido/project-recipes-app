@@ -5,8 +5,14 @@ export const GlobalContext = React.createContext();
 
 const GlobalStorage = ({ children }) => {
   const [pageName, setPageName] = useState('');
+  const [responseFetch, setResponseFetch] = useState(null);
 
-  const value = { pageName, setPageName };
+  const value = {
+    pageName,
+    setPageName,
+    responseFetch,
+    setResponseFetch,
+  };
 
   return (
     <GlobalContext.Provider value={ value }>

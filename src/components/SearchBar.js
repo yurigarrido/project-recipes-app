@@ -1,20 +1,40 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import { GlobalContext } from '../context/GlobalStorage';
 
 const SearchBar = () => {
   const [searchInput, setSearchInput] = useState('');
   const [option, setOption] = useState('name');
-  const { request, data } = useFetch();
+  const { request } = useFetch();
   const FIRST_LETTER = 'first-letter';
   const INGREDIENTS = 'ingredients';
   const NAME = 'name';
-  const state = useContext(GlobalContext);
+  const GLOBAL = useContext(GlobalContext);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (GLOBAL.responseFetch !== null && GLOBAL.pageName === 'comidas') {
+      if (GLOBAL.responseFetch.meals.length === 1) {
+        const { idMeal } = GLOBAL.responseFetch.meals[0];
+        history.push(`/comidas/${idMeal}`);
+      } else {
+        console.log('oi');
+      }
+    } else if (GLOBAL.responseFetch !== null && GLOBAL.pageName === 'bebidas') {
+      if (GLOBAL.responseFetch.drinks.length === 1) {
+        const { idDrink } = GLOBAL.responseFetch.drinks[0];
+        history.push(`/bebidas/${idDrink}`);
+      } else {
+        console.log('oi');
+      }
+    }
+  }, [GLOBAL, history]);
 
   const ifHandle = async (op, method) => {
-    if (state.pageName === 'comidas') {
+    if (GLOBAL.pageName === 'comidas') {
       await request(`https://www.themealdb.com/api/json/v1/1/${method}.php?${op}=${searchInput}`);
-    } else if (state.pageName === 'bebidas') {
+    } else if (GLOBAL.pageName === 'bebidas') {
       await request(`https://www.thecocktaildb.com/api/json/v1/1/${method}.php?${op}=${searchInput}`);
     }
   };
@@ -30,7 +50,6 @@ const SearchBar = () => {
         break;
       case NAME:
         await ifHandle('s', 'search');
-        console.log(data);
         break;
       case FIRST_LETTER:
         ifHandle('f', 'search');

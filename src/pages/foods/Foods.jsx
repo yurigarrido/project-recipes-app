@@ -3,12 +3,11 @@ import { Header, Footer } from '../../components';
 import { GlobalContext } from '../../context/GlobalStorage';
 
 const Foods = () => {
-  const state = useContext(GlobalContext);
+  const GLOBAL = useContext(GlobalContext);
 
   useEffect(() => {
-    state.setPageName('comidas');
-    console.log(state.pageName);
-  }, [state]);
+    GLOBAL.setPageName('comidas');
+  }, [GLOBAL]);
 
   return (
     <div>
