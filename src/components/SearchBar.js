@@ -12,16 +12,17 @@ const SearchBar = () => {
   const NAME = 'name';
   const GLOBAL = useContext(GlobalContext);
   const history = useHistory();
+  const pageName = window.location.pathname;
 
   useEffect(() => {
-    if (GLOBAL.responseFetch !== null && GLOBAL.pageName === 'comidas') {
+    if (GLOBAL.responseFetch !== null && pageName === '/comidas') {
       if (GLOBAL.responseFetch.meals.length === 1) {
         const { idMeal } = GLOBAL.responseFetch.meals[0];
         history.push(`/comidas/${idMeal}`);
       } else {
         console.log('oi');
       }
-    } else if (GLOBAL.responseFetch !== null && GLOBAL.pageName === 'bebidas') {
+    } else if (GLOBAL.responseFetch !== null && pageName === '/bebidas') {
       if (GLOBAL.responseFetch.drinks.length === 1) {
         const { idDrink } = GLOBAL.responseFetch.drinks[0];
         history.push(`/bebidas/${idDrink}`);
@@ -29,12 +30,12 @@ const SearchBar = () => {
         console.log('oi');
       }
     }
-  }, [GLOBAL, history]);
+  }, [GLOBAL, history, pageName]);
 
   const ifHandle = async (op, method) => {
-    if (GLOBAL.pageName === 'comidas') {
+    if (pageName === '/comidas') {
       await request(`https://www.themealdb.com/api/json/v1/1/${method}.php?${op}=${searchInput}`);
-    } else if (GLOBAL.pageName === 'bebidas') {
+    } else if (pageName === '/bebidas') {
       await request(`https://www.thecocktaildb.com/api/json/v1/1/${method}.php?${op}=${searchInput}`);
     }
   };
