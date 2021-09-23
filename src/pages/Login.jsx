@@ -23,7 +23,7 @@ const Login = () => {
     return setEnable(false);
   }, [password, email]);
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const user = {
@@ -35,11 +35,11 @@ const Login = () => {
     localStorage.setItem('user', JSON.stringify(user));
 
     history.push('/comidas');
-  }
+  };
 
   return (
     <div>
-      <form action="submit">
+      <form onSubmit={ (e) => handleSubmit(e) }>
         <label htmlFor="email">
           EMAIL
           <input
@@ -61,10 +61,9 @@ const Login = () => {
           />
         </label>
         <button
-          type="button"
+          type="submit"
           data-testid="login-submit-btn"
           disabled={ !enable }
-          onClick={ handleSubmit }
         >
           Entrar
         </button>
