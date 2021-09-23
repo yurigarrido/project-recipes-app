@@ -10,17 +10,19 @@ const Drinks = () => {
   useEffect(() => {
     if (GLOBAL.responseFetch !== null) {
       const { drinks } = GLOBAL.responseFetch;
-      const twelve = 12;
-      setDrinksArray(drinks.slice(0, twelve));
-      if (drinks.length > 1) {
-        setIsList(true);
+      if (drinks !== null) {
+        const twelve = 12;
+        setDrinksArray(drinks.slice(0, twelve));
+        if (drinks.length > 1) {
+          setIsList(true);
+        }
       }
     }
   }, [GLOBAL]);
 
   return (
     <div>
-      <Header title="Comidas" />
+      <Header title="Bebidas" />
       { isList && <RecipeCard products={ drinksArray } pageName="bebidas" /> }
       <Footer />
     </div>

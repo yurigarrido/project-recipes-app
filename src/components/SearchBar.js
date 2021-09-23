@@ -16,18 +16,20 @@ const SearchBar = () => {
 
   useEffect(() => {
     if (GLOBAL.responseFetch !== null && pageName === '/comidas') {
-      if (GLOBAL.responseFetch.meals.length === 1) {
+      if (GLOBAL.responseFetch.meals === null) {
+        global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        GLOBAL.setResponseFetch(null);
+      } else if (GLOBAL.responseFetch.meals.length === 1) {
         const { idMeal } = GLOBAL.responseFetch.meals[0];
         history.push(`/comidas/${idMeal}`);
-      } else {
-        console.log('oi');
       }
     } else if (GLOBAL.responseFetch !== null && pageName === '/bebidas') {
-      if (GLOBAL.responseFetch.drinks.length === 1) {
+      if (GLOBAL.responseFetch.drinks === null) {
+        GLOBAL.setResponseFetch(null);
+        global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      } else if (GLOBAL.responseFetch.drinks.length === 1) {
         const { idDrink } = GLOBAL.responseFetch.drinks[0];
         history.push(`/bebidas/${idDrink}`);
-      } else {
-        console.log('oi');
       }
     }
   }, [GLOBAL, history, pageName]);
