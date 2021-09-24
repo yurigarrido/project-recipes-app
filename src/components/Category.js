@@ -26,8 +26,15 @@ const Category = ({ pageName }) => {
         setCategoryList(categories.drinks.slice(0, five));
       }
     }
-    console.log(categories);
   }, [categories, pageName]);
+
+  const handleClick = (categoryName) => {
+    if (pageName === 'comidas') {
+      request(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`);
+    } else if (pageName === 'bebidas') {
+      request(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categoryName}`);
+    }
+  };
 
   return (
     <section>
@@ -37,7 +44,7 @@ const Category = ({ pageName }) => {
             key={ index }
             data-testid={ `${category.strCategory}-category-filter` }
             type="button"
-            // onClick={ () => 'colocar lógica do fetch' }
+            onClick={ () => handleClick(category.strCategory) }
           >
             { category.strCategory }
           </button>
