@@ -17,14 +17,16 @@ const SearchBar = () => {
   useEffect(() => {
     if (GLOBAL.responseFetch !== null && pageName === '/comidas') {
       if (GLOBAL.responseFetch.meals === null) {
-        global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        setSearchInput('');
         GLOBAL.setResponseFetch(null);
+        global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else if (GLOBAL.responseFetch.meals.length === 1) {
         const { idMeal } = GLOBAL.responseFetch.meals[0];
         history.push(`/comidas/${idMeal}`);
       }
     } else if (GLOBAL.responseFetch !== null && pageName === '/bebidas') {
       if (GLOBAL.responseFetch.drinks === null) {
+        setSearchInput('');
         GLOBAL.setResponseFetch(null);
         global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else if (GLOBAL.responseFetch.drinks.length === 1) {
@@ -70,6 +72,7 @@ const SearchBar = () => {
         data-testid="search-input"
         placeholder="Buscar Receita"
         onChange={ (e) => setSearchInput(e.target.value) }
+        value={ searchInput }
       />
       <input
         type="radio"

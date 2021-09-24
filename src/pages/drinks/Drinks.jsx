@@ -1,11 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Header, Footer, RecipeCard } from '../../components';
+import { Header, Footer, RecipeCard, Category } from '../../components';
 import { GlobalContext } from '../../context/GlobalStorage';
+import useFetch from '../../hooks/useFetch';
 
 const Drinks = () => {
   const GLOBAL = useContext(GlobalContext);
   const [isList, setIsList] = useState(false);
   const [drinksArray, setDrinksArray] = useState(null);
+  const { request } = useFetch();
+
+  useEffect(() => {
+    if (GLOBAL.responseFetch === null) {
+      request('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    }
+  });
 
   useEffect(() => {
     if (GLOBAL.responseFetch !== null) {
@@ -23,6 +31,7 @@ const Drinks = () => {
   return (
     <div>
       <Header title="Bebidas" />
+      <Category pageName="bebidas" />
       { isList && <RecipeCard products={ drinksArray } pageName="bebidas" /> }
       <Footer />
     </div>

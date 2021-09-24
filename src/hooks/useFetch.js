@@ -5,9 +5,10 @@ const useFetch = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
+  const [categories, setCategories] = useState(null);
   const GLOBAL = useContext(GlobalContext);
 
-  const request = React.useCallback(async (url) => {
+  const request = React.useCallback(async (url, category = false) => {
     let response;
     let json;
     try {
@@ -20,13 +21,17 @@ const useFetch = () => {
       json = null;
       setError(err.message);
     } finally {
-      setData(json);
       setLoading(false);
-      GLOBAL.setResponseFetch(json);
+      setData(json);
+      if (category === false) {
+        GLOBAL.setResponseFetch(json);
+      } else {
+        setCategories(json);
+      }
     }
   }, [GLOBAL]);
 
-  return { data, loading, error, request };
+  return { data, loading, error, request, categories };
 };
 
 export default useFetch;
