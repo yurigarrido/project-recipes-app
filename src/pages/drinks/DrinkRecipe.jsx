@@ -20,7 +20,9 @@ const DrinkRecipe = () => {
           <h2 data-testid="recipe-title">{ data.drinks[0].strDrink }</h2>
           <ShareButton />
           <FavoreButton />
-          <p data-testid="recipe-category">{ `${data.drinks[0].strCategory} ${data.drinks[0].strAlcoholic}` }</p>
+          <p data-testid="recipe-category">
+            { `${data.drinks[0].strCategory} ${data.drinks[0].strAlcoholic}` }
+          </p>
           <Ingredients data={ data } />
           <Instructions inst={ data.drinks[0].strInstructions } />
           <RecommendationCards />

@@ -3,44 +3,42 @@ import PropTypes from 'prop-types';
 
 const Ingredients = ({ data }) => {
   const [ingredients, setIngredients] = useState([]);
-  const pageName = window.location.pathname.split('/')[1];
+  const [pageName, setPageName] = useState(null);
 
   useEffect(() => {
-    if (data !== null) {
+    const page = window.location.pathname;
+    if (pageName === null) {
+      if (page.split('/')[1] === 'comidas') {
+        setPageName('meals');
+      } else {
+        setPageName('drinks');
+      }
+    }
+  }, [pageName]);
+
+  useEffect(() => {
+    if (data !== null && pageName !== null) {
       const arrayIng = [];
       const arrayMeas = [];
 
       // source https://stackoverflow.com/a/64509241 obrigado Deus
-      switch (pageName) {
-      case 'comidas':
-        Object.keys(data.meals[0]).forEach((key) => {
-          if (key.includes('strIngredient') && data.meals[0][key] !== null) {
-            arrayIng.push(data.meals[0][key]);
-          }
-          if (key.includes('strMeasure') && data.meals[0][key] !== '') {
-            arrayMeas.push(data.meals[0][key]);
-          }
-        });
-        break;
-      case 'bebidas':
-        Object.keys(data.drinks[0]).forEach((key) => {
-          if (key.includes('strIngredient') && (data.drinks[0][key] !== '' && data.drinks[0][key] !== null)) {
-            arrayIng.push(data.drinks[0][key]);
-          }
-          if (key.includes('strMeasure') && (data.drinks[0][key] !== '' && data.drinks[0][key] !== null)) {
-            arrayMeas.push(data.drinks[0][key]);
-          }
-        });
-        break;
-      default:
-        break;
-      }
+      Object.keys(data[pageName][0]).forEach((key) => {
+        if (key.includes('strIngredient') && (data[pageName][0][key] !== null
+          && data[pageName][0][key] !== '')) {
+          arrayIng.push(data[pageName][0][key]);
+        }
+        if (key.includes('strMeasure') && (data[pageName][0][key] !== null
+          && data[pageName][0][key] !== '')) {
+          arrayMeas.push(data[pageName][0][key]);
+        }
+      });
 
       const aux = arrayMeas.map((measure, index) => `${measure} - ${arrayIng[index]}`);
 
       setIngredients(aux);
     }
   }, [data, pageName]);
+
   return (
     <div>
       <ul>
@@ -56,11 +54,6 @@ const Ingredients = ({ data }) => {
 
 Ingredients.propTypes = {
   data: PropTypes.objectOf(PropTypes.array).isRequired,
-  meals: PropTypes.objectOf(PropTypes.object),
-};
-
-Ingredients.defaultProps = {
-  meals: {},
 };
 
 export default Ingredients;
