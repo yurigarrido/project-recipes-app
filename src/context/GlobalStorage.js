@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 export const GlobalContext = React.createContext();
 
 const GlobalStorage = ({ children }) => {
-  const [pageName, setPageName] = useState('');
+  const [responseFetch, setResponseFetch] = useState(null);
 
-  const value = { pageName, setPageName };
+  const value = {
+    responseFetch,
+    setResponseFetch,
+  };
 
   return (
     <GlobalContext.Provider value={ value }>

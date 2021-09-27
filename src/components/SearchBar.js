@@ -1,20 +1,45 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import { GlobalContext } from '../context/GlobalStorage';
 
 const SearchBar = () => {
   const [searchInput, setSearchInput] = useState('');
   const [option, setOption] = useState('name');
-  const { request, data } = useFetch();
+  const { request } = useFetch();
   const FIRST_LETTER = 'first-letter';
   const INGREDIENTS = 'ingredients';
   const NAME = 'name';
-  const state = useContext(GlobalContext);
+  const GLOBAL = useContext(GlobalContext);
+  const history = useHistory();
+  const pageName = window.location.pathname;
+
+  useEffect(() => {
+    if (GLOBAL.responseFetch !== null && pageName === '/comidas') {
+      if (GLOBAL.responseFetch.meals === null) {
+        setSearchInput('');
+        GLOBAL.setResponseFetch(null);
+        global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      } else if (GLOBAL.responseFetch.meals.length === 1) {
+        const { idMeal } = GLOBAL.responseFetch.meals[0];
+        history.push(`/comidas/${idMeal}`);
+      }
+    } else if (GLOBAL.responseFetch !== null && pageName === '/bebidas') {
+      if (GLOBAL.responseFetch.drinks === null) {
+        setSearchInput('');
+        GLOBAL.setResponseFetch(null);
+        global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      } else if (GLOBAL.responseFetch.drinks.length === 1) {
+        const { idDrink } = GLOBAL.responseFetch.drinks[0];
+        history.push(`/bebidas/${idDrink}`);
+      }
+    }
+  }, [GLOBAL, history, pageName]);
 
   const ifHandle = async (op, method) => {
-    if (state.pageName === 'comidas') {
+    if (pageName === '/comidas') {
       await request(`https://www.themealdb.com/api/json/v1/1/${method}.php?${op}=${searchInput}`);
-    } else if (state.pageName === 'bebidas') {
+    } else if (pageName === '/bebidas') {
       await request(`https://www.thecocktaildb.com/api/json/v1/1/${method}.php?${op}=${searchInput}`);
     }
   };
@@ -30,7 +55,6 @@ const SearchBar = () => {
         break;
       case NAME:
         await ifHandle('s', 'search');
-        console.log(data);
         break;
       case FIRST_LETTER:
         ifHandle('f', 'search');
@@ -48,6 +72,7 @@ const SearchBar = () => {
         data-testid="search-input"
         placeholder="Buscar Receita"
         onChange={ (e) => setSearchInput(e.target.value) }
+        value={ searchInput }
       />
       <input
         type="radio"
