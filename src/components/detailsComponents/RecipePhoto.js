@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './css/RecipePhoto.module.css';
 
 const RecipePhoto = ({ url }) => (
-  <div>
+  <div className={ styles.image_card }>
     <img data-testid="recipe-photo" src={ url } alt="" />
   </div>
 );
