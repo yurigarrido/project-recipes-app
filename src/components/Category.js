@@ -2,33 +2,43 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useFetch from '../hooks/useFetch';
 
-const ifHandle = (request, categoryName, pageName, clicked) => {
+const ifHandle = (values, request, setCategoryAux) => {
+  const {
+    pageName,
+    categoryName,
+    categoryAux,
+  } = values;
+
   if (pageName === 'comidas') {
-    if (categoryName === 'All' || clicked === false) {
+    if (categoryName === 'All' || categoryName === categoryAux) {
       request('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      setCategoryAux(categoryName);
     } else {
       request(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`);
+      setCategoryAux(categoryName);
     }
   } else if (pageName === 'bebidas') {
-    if (categoryName === 'All' || clicked === false) {
+    if (categoryName === 'All' || categoryName === categoryAux) {
       request('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      setCategoryAux(categoryName);
     } else {
       request(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categoryName}`);
+      setCategoryAux(categoryName);
     }
   }
 };
 
 const Category = ({ pageName }) => {
   const [categoryList, setCategoryList] = useState(null);
+  const [categoryAux, setCategoryAux] = useState(null);
   const { request, categories } = useFetch();
-  const [clicked, setClicked] = useState(false);
   const [aux, setAux] = useState(false);
 
   if (aux === false) {
-    if (pageName === 'comidas' && aux === false) {
+    if (pageName === 'comidas') {
       request('https://www.themealdb.com/api/json/v1/1/list.php?c=list', true);
       setAux(true);
-    } else if (pageName === 'bebidas' && aux === false) {
+    } else if (pageName === 'bebidas') {
       request('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list', true);
       setAux(true);
     }
@@ -37,17 +47,18 @@ const Category = ({ pageName }) => {
   useEffect(() => {
     const five = 5;
     if (categories !== null) {
-      if (pageName === 'comidas') {
-        setCategoryList(categories.meals.slice(0, five));
-      } else if (pageName === 'bebidas') {
-        setCategoryList(categories.drinks.slice(0, five));
-      }
+      if (pageName === 'comidas') setCategoryList(categories.meals.slice(0, five));
+      else if (pageName === 'bebidas') setCategoryList(categories.drinks.slice(0, five));
     }
   }, [categories, pageName]);
 
   const handleClick = (categoryName) => {
-    setClicked(!clicked);
-    ifHandle(request, categoryName, pageName, !clicked);
+    const values = {
+      categoryName,
+      pageName,
+      categoryAux,
+    };
+    ifHandle(values, request, setCategoryAux);
   };
 
   return (
