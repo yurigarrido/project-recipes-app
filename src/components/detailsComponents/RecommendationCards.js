@@ -7,6 +7,7 @@ import styles from './css/RecommendationCards.module.css';
 const RecommendationCards = () => {
   const GLOBAL = useContext(GlobalContext);
   const [recomendationName, setRecomendation] = useState(null);
+  const [caroulsel, setCaroulsel] = useState(null);
   const { request } = useFetch();
   const six = 6;
 
@@ -19,27 +20,31 @@ const RecommendationCards = () => {
       request('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       setRecomendation('meals');
     }
-  }, [request]);
+  });
+
+  useEffect(() => {
+    if (GLOBAL.responseFetch !== null && recomendationName !== null) {
+      setCaroulsel(GLOBAL.responseFetch[recomendationName]);
+    }
+  }, [GLOBAL]);
 
   return (
     <div>
       {
-        (GLOBAL.responseFetch !== null) && (recomendationName !== null) && (
-          GLOBAL.responseFetch[recomendationName].slice(0, six).map((el, index) => (
-            <div
-              data-testid={ `${index}-recomendation-card` }
-              key={ index }
-              className={ styles.card }
-            >
-              <img
-                src={
-                  recomendationName === 'drinks' ? el.strDrinkThumb : el.strMealThumb
-                }
-                alt={ recomendationName === 'drinks' ? el.strDrink : el.strMeal }
-              />
-            </div>
-          ))
-        )
+        caroulsel !== null && caroulsel.slice(0, six).map((el, index) => (
+          <div
+            data-testid={ `${index}-recomendation-card` }
+            key={ index }
+            className={ styles.card }
+          >
+            <img
+              src={
+                recomendationName === 'drinks' ? el.strDrinkThumb : el.strMealThumb
+              }
+              alt={ recomendationName === 'drinks' ? el.strDrink : el.strMeal }
+            />
+          </div>
+        ))
       }
     </div>
   );

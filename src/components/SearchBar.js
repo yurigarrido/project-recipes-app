@@ -74,31 +74,40 @@ const SearchBar = () => {
         onChange={ (e) => setSearchInput(e.target.value) }
         value={ searchInput }
       />
-      <input
-        type="radio"
-        id="Ingredientes"
-        value={ INGREDIENTS }
-        data-testid="ingredient-search-radio"
-        name="option"
-        onClick={ () => setOption(INGREDIENTS) }
-      />
-      <input
-        type="radio"
-        id="Name"
-        value={ NAME }
-        data-testid="name-search-radio"
-        name="option"
-        onClick={ () => setOption(NAME) }
-        defaultChecked
-      />
-      <input
-        type="radio"
-        id={ FIRST_LETTER }
-        value={ FIRST_LETTER }
-        data-testid="first-letter-search-radio"
-        name="option"
-        onClick={ () => setOption(FIRST_LETTER) }
-      />
+      <label htmlFor="ingredient-search-radio">
+        Ingredientes
+        <input
+          type="radio"
+          id="Ingredientes"
+          value={ INGREDIENTS }
+          data-testid="ingredient-search-radio"
+          name="option"
+          onClick={ () => setOption(INGREDIENTS) }
+        />
+      </label>
+      <label htmlFor="name-search-radio">
+        Nome
+        <input
+          type="radio"
+          id="Name"
+          value={ NAME }
+          data-testid="name-search-radio"
+          name="option"
+          onClick={ () => setOption(NAME) }
+          defaultChecked
+        />
+      </label>
+      <label htmlFor="first-letter-search-radio">
+        Primeira letra
+        <input
+          type="radio"
+          id={ FIRST_LETTER }
+          value={ FIRST_LETTER }
+          data-testid="first-letter-search-radio"
+          name="option"
+          onClick={ () => setOption(FIRST_LETTER) }
+        />
+      </label>
       <button
         type="submit"
         data-testid="exec-search-btn"
