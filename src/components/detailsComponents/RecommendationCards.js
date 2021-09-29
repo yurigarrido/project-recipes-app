@@ -31,17 +31,23 @@ const RecommendationCards = () => {
   return (
     <div>
       {
-        caroulsel !== null && caroulsel.slice(0, six).map((el, index) => (
+        (caroulsel !== undefined && caroulsel !== null)
+        && caroulsel.slice(0, six).map((el, index) => (
           <div
             data-testid={ `${index}-recomendation-card` }
             key={ index }
             className={ styles.card }
           >
+            {console.log(el)}
             <img
               src={
-                recomendationName === 'drinks' ? el.strDrinkThumb : el.strMealThumb
+                recomendationName === 'drinks'
+                  ? el.strDrinkThumb
+                  : el.strMealThumb
               }
-              alt={ recomendationName === 'drinks' ? el.strDrink : el.strMeal }
+              alt={ recomendationName === 'drinks'
+                ? el.strDrink
+                : el.strMeal }
             />
           </div>
         ))
