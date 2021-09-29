@@ -23,10 +23,10 @@ const DrinkRecipe = () => {
   useEffect(() => {
     request(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${pageId}`);
   }, [request, pageId]);
-
+  console.log(data);
   return (
     <div>
-      { data !== null && (
+      { data && data.drinks && (
         <>
           <RecipePhoto url={ data.drinks[0].strDrinkThumb } />
           <h2 data-testid="recipe-title">{ data.drinks[0].strDrink }</h2>
