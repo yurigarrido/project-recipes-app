@@ -13,7 +13,7 @@ const Foods = () => {
     if (GLOBAL.responseFetch === null) {
       request('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     }
-  });
+  }, []);
 
   useEffect(() => {
     if (GLOBAL.responseFetch !== null) {

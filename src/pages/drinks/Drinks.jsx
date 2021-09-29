@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Header, Footer, RecipeCard, Category } from '../../components';
 import { GlobalContext } from '../../context/GlobalStorage';
+import { Header, Footer, RecipeCard, Category } from '../../components';
 import useFetch from '../../hooks/useFetch';
 
 const Drinks = () => {
@@ -13,10 +13,10 @@ const Drinks = () => {
     if (GLOBAL.responseFetch === null) {
       request('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     }
-  });
+  }, []);
 
   useEffect(() => {
-    if (GLOBAL.responseFetch !== null) {
+    if (GLOBAL.responseFetch !== null && GLOBAL.responseFetch !== undefined) {
       const { drinks } = GLOBAL.responseFetch;
       if (drinks !== null) {
         const twelve = 12;

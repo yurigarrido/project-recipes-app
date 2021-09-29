@@ -1,14 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { GlobalContext } from '../../context/GlobalStorage';
-import useFetch from '../../hooks/useFetch';
+import React, { useState, useEffect } from 'react';
+import useFetchRecommendation from '../../hooks/useFetchRecommendation';
 
 import styles from './css/RecommendationCards.module.css';
 
 const RecommendationCards = () => {
-  const GLOBAL = useContext(GlobalContext);
   const [recomendationName, setRecomendation] = useState(null);
   const [caroulsel, setCaroulsel] = useState(null);
-  const { request } = useFetch();
+  const { request, data } = useFetchRecommendation();
   const six = 6;
 
   useEffect(() => {
@@ -23,13 +21,13 @@ const RecommendationCards = () => {
   }, []);
 
   useEffect(() => {
-    if (GLOBAL.responseFetch !== null && recomendationName !== null) {
-      setCaroulsel(GLOBAL.responseFetch[recomendationName]);
+    if (data !== null && recomendationName !== null) {
+      setCaroulsel(data[recomendationName]);
     }
-  }, [GLOBAL, recomendationName]);
+  }, [data, recomendationName, caroulsel]);
 
   return (
-    <div>
+    <div className={ styles.carousel }>
       {
         (caroulsel !== undefined && caroulsel !== null)
         && caroulsel.slice(0, six).map((el, index) => (
@@ -38,7 +36,6 @@ const RecommendationCards = () => {
             key={ index }
             className={ styles.card }
           >
-            {console.log(el)}
             <img
               src={
                 recomendationName === 'drinks'
@@ -49,6 +46,13 @@ const RecommendationCards = () => {
                 ? el.strDrink
                 : el.strMeal }
             />
+            <p data-testid={ `${index}-recomendation-title` }>
+              {
+                recomendationName === 'drinks'
+                  ? el.strDrink
+                  : el.strMeal
+              }
+            </p>
           </div>
         ))
       }

@@ -1,19 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './css/StartButton.module.css';
 
 const StartButton = () => {
-  const [progress, setProgress] = useState({ cocktails: {}, meals: {} });
-  // const [showButton, setShowButton] = useState(true);
-
   const category = window.location.pathname.split('/')[1];
   const id = window.location.pathname.split('/')[2];
+  const [buttonText, setButtonText] = useState('Iniciar Receita');
+  const categoryType = category === 'comidas' ? 'meals' : 'cocktails';
+
+  useEffect(() => {
+    if (localStorage.inProgressRecipes) {
+      const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (Object.keys(local[categoryType]).includes(id)) {
+        setButtonText('Continuar Receita');
+      }
+    }
+  }, []);
 
   const handleClick = () => {
-    const categoryType = category === 'comidas' ? 'meals' : 'cocktails';
-    // precisamos fazer verificação se o localstorage existe e adicionar novos ids
-    setProgress({ ...progress, ...progress[categoryType][id] = [] });
-    localStorage.setItem('inProgressRecipes', JSON.stringify(progress));
+    if (!localStorage.getItem('inProgressRecipes')) {
+      if (category === 'comidas') {
+        localStorage.setItem(
+          'inProgressRecipes',
+          JSON.stringify({ cocktails: {}, meals: { [id]: [] } }),
+        );
+      } else {
+        localStorage.setItem(
+          'inProgressRecipes',
+          JSON.stringify({ cocktails: { [id]: [] }, meals: {} }),
+        );
+      }
+    } else {
+      const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      localStorage.setItem(
+        'inProgressRecipes',
+        JSON.stringify({
+          ...local, [categoryType]: { ...local[categoryType], [id]: [] },
+        }),
+      );
+    }
   };
 
   return (
@@ -24,7 +49,7 @@ const StartButton = () => {
         data-testid="start-recipe-btn"
         onClick={ handleClick }
       >
-        Iniciar Receita
+        { buttonText }
       </button>
     </Link>
   );

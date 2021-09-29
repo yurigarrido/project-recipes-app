@@ -24,16 +24,21 @@ const Ingredients = ({ data }) => {
       // source https://stackoverflow.com/a/64509241 obrigado Deus
       Object.keys(data[pageName][0]).forEach((key) => {
         if (key.includes('strIngredient') && (data[pageName][0][key] !== null
-          && data[pageName][0][key] !== '')) {
+          && data[pageName][0][key] !== '' && data[pageName][0][key] !== undefined)) {
           arrayIng.push(data[pageName][0][key]);
         }
         if (key.includes('strMeasure') && (data[pageName][0][key] !== null
-          && data[pageName][0][key] !== '')) {
+          && data[pageName][0][key] !== '' && data[pageName][0][key] !== undefined)) {
           arrayMeas.push(data[pageName][0][key]);
         }
       });
 
-      const aux = arrayMeas.map((measure, index) => `${measure} - ${arrayIng[index]}`);
+      const aux = arrayIng.map((ing, index) => {
+        if (arrayMeas[index] === undefined) {
+          return ing;
+        }
+        return `${arrayMeas[index]} - ${ing}`;
+      });
 
       setIngredients(aux);
     }
