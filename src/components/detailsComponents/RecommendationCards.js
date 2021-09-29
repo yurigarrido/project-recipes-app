@@ -20,13 +20,13 @@ const RecommendationCards = () => {
       request('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       setRecomendation('meals');
     }
-  });
+  }, []);
 
   useEffect(() => {
     if (GLOBAL.responseFetch !== null && recomendationName !== null) {
       setCaroulsel(GLOBAL.responseFetch[recomendationName]);
     }
-  }, [GLOBAL]);
+  }, [GLOBAL, recomendationName]);
 
   return (
     <div>

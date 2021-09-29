@@ -1,48 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './css/StartButton.module.css';
 
 const StartButton = () => {
-  const [showButton, setShowButton] = useState(true);
-  const [nameButton, setNameButton] = useState('Iniciar Receita');
-  const [dataLocalStorage, setDataLocalStorage] = useState(null);
+  const [progress, setProgress] = useState({ cocktails: {}, meals: {} });
+  // const [showButton, setShowButton] = useState(true);
 
-  useEffect(() => {
-    const category = window.location.pathname.split('/')[1];
-    const id = window.location.pathname.split('/')[2];
-    if (localStorage[category]) {
-      const localData = JSON.parse(localStorage[category]);
-      const test = localData.find((data) => {
-        return data === id;
-      });
-      console.log(test);
-    }
-  }, []);
+  const category = window.location.pathname.split('/')[1];
+  const id = window.location.pathname.split('/')[2];
 
   const handleClick = () => {
-    const category = window.location.pathname.split('/')[1];
-    const id = window.location.pathname.split('/')[2];
-    if (localStorage[category]) {
-      const localData = JSON.parse(localStorage[category]);
-      const localUpdate = [...localData, id];
-      localStorage[category] = JSON.stringify(localUpdate);
-    } else {
-      localStorage[category] = JSON.stringify([id]);
-    }
+    const categoryType = category === 'comidas' ? 'meals' : 'cocktails';
+    // precisamos fazer verificação se o localstorage existe e adicionar novos ids
+    setProgress({ ...progress, ...progress[categoryType][id] = [] });
+    localStorage.setItem('inProgressRecipes', JSON.stringify(progress));
   };
 
   return (
-    <button
-      className={ styles.button }
-      type="button"
-      data-testid="start-recipe-btn"
-      onClick={ handleClick }
-    >
-      {nameButton}
-    </button>
+    <Link to={ `/${category}/${id}/in-progress` }>
+      <button
+        className={ styles.button }
+        type="button"
+        data-testid="start-recipe-btn"
+        onClick={ handleClick }
+      >
+        Iniciar Receita
+      </button>
+    </Link>
   );
 };
-
-// localStorage.setItem('category', 'id');
-// localStorage.getItem('category');
 
 export default StartButton;
