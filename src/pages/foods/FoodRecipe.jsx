@@ -43,7 +43,7 @@ const FoodRecipe = () => {
           <RecipePhoto url={ data.meals[0].strMealThumb } />
           <h2 data-testid="recipe-title">{ data.meals[0].strMeal }</h2>
           <ShareButton />
-          <FavoreButton />
+          <FavoreButton data={ data.meals[0] } />
           <p data-testid="recipe-category">{ data.meals[0].strCategory }</p>
           <Ingredients data={ data } />
           <Instructions inst={ data.meals[0].strInstructions } />

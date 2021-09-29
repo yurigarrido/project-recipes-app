@@ -31,7 +31,7 @@ const DrinkRecipe = () => {
           <RecipePhoto url={ data.drinks[0].strDrinkThumb } />
           <h2 data-testid="recipe-title">{ data.drinks[0].strDrink }</h2>
           <ShareButton />
-          <FavoreButton />
+          <FavoreButton data={ data.drinks[0] } />
           <p data-testid="recipe-category">
             { `${data.drinks[0].strCategory} ${data.drinks[0].strAlcoholic}` }
           </p>
