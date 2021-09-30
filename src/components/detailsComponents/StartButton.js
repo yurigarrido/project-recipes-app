@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import localRecipeProgress from '../../helper/localRecipeProgress';
 import styles from './css/StartButton.module.css';
 
 const StartButton = () => {
@@ -18,25 +19,7 @@ const StartButton = () => {
   }, [categoryType, id]);
 
   const handleClick = () => {
-    if (!localStorage.inProgressRecipes) {
-      if (category === 'comidas') {
-        localStorage.inProgressRecipes = JSON.stringify(
-          { cocktails: {}, meals: { [id]: [] } },
-        );
-      } else {
-        localStorage.inProgressRecipes = JSON.stringify(
-          { cocktails: { [id]: [] }, meals: {} },
-        );
-      }
-    } else {
-      const local = JSON.parse(localStorage.inProgressRecipes);
-      localStorage.inProgressRecipes = JSON.stringify(
-        {
-          ...local,
-          [categoryType]: { ...local[categoryType], [id]: [] },
-        },
-      );
-    }
+    localRecipeProgress(category, id, []);
   };
 
   return (

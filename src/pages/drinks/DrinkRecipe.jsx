@@ -32,7 +32,7 @@ const DrinkRecipe = () => {
 
   useEffect(() => {
     if (localStorage.doneRecipes) {
-      const local = JSON.parse(localStorage.getItem('doneRecipes'));
+      const local = JSON.parse(localStorage.doneRecipes);
       local.forEach((recipe) => {
         if (recipe.id === pageId) {
           setShowStartBtn(false);

@@ -1,13 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const FinishButton = () => (
   <div>
-    <button
-      data-testid="finish-recipe-btn"
-      type="button"
-    >
-      Finish
-    </button>
+    <Link to="/receitas-feitas">
+      <button
+        data-testid="finish-recipe-btn"
+        type="button"
+        disabled={ false }
+      >
+        Finish
+      </button>
+    </Link>
   </div>
 );
 
