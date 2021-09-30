@@ -48,7 +48,10 @@ const Ingredients = ({ data }) => {
       <ul>
         { ingredients.map((ing, index) => (
           <li key={ index } data-testid={ `${index}-ingredient-step` }>
-            { ing }
+            <label htmlFor={ `ing-${index}` }>
+              <input type="checkbox" id={ `ing-${index}` } />
+              { ing }
+            </label>
           </li>
         )) }
       </ul>

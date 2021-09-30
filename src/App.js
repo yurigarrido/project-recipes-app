@@ -4,7 +4,7 @@ import GlobalStorage from './context/GlobalStorage';
 
 import { Login, Foods, Profile, Drinks, DrinkRecipe, FoodRecipe, DrinkProgress,
   ExploreFood, Explore, ExploreDrink, ExploreFoodIng, ExploreFoodArea, ExploreDrinkIng,
-  RecipesDone, RecipesFav, FoodProgress, NotFound } from './pages';
+  RecipesDone, RecipesFav, FoodProgress /* , NotFound */ } from './pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
