@@ -10,7 +10,7 @@ const Drinks = () => {
   const { request } = useFetch();
 
   useEffect(() => {
-    if (responseFetch === null) {
+    if (responseFetch === null || responseFetch.meals) {
       request('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     }
   }, [request, responseFetch]);

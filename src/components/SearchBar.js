@@ -15,6 +15,8 @@ const SearchBar = () => {
   const [option, setOption] = useState('name');
   const pageName = window.location.pathname.split('/')[1];
 
+  // q
+
   useEffect(() => {
     if (responseFetch && pageName === 'comidas') {
       if (responseFetch.meals === null) {

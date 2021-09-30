@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useFetchRecipe from '../../hooks/useFetchRecipe';
 import { RecipePhoto, ShareButton,
-  FavoreButton, Ingredients, Instructions,
+  FavoriteButton, Ingredients, Instructions,
   Video, RecommendationCards, StartButton } from '../../components/detailsComponents';
 
 const FoodRecipe = () => {
@@ -39,7 +39,7 @@ const FoodRecipe = () => {
           <RecipePhoto url={ foodDetails.strMealThumb } />
           <h2 data-testid="recipe-title">{ foodDetails.strMeal }</h2>
           <ShareButton />
-          <FavoreButton data={ foodDetails } />
+          <FavoriteButton data={ foodDetails } />
           <p data-testid="recipe-category">{ foodDetails.strCategory }</p>
           <Ingredients data={ data } />
           <Instructions inst={ foodDetails.strInstructions } />
