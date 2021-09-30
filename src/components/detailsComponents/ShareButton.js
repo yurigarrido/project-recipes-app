@@ -7,8 +7,9 @@ const ShareButton = () => {
 
   const handleClick = (() => {
     const link = window.location;
+    const linkToString = (link.toString().replace('/in-progress', ''));
     const sec = 1000;
-    clipboardCopy(link);
+    clipboardCopy(linkToString);
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
