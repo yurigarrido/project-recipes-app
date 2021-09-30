@@ -5,7 +5,6 @@ import styles from './css/recipeCard.module.css';
 
 const RecipeCard = ({ products, pageName }) => (
   <section>
-    { console.log(pageName) }
     {
       products.map((product, index) => (
         <Link

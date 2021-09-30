@@ -3,43 +3,44 @@ import { useHistory } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import { GlobalContext } from '../context/GlobalStorage';
 
+const FIRST_LETTER = 'first-letter';
+const INGREDIENTS = 'ingredients';
+const NAME = 'name';
+
 const SearchBar = () => {
+  const { request } = useFetch();
+  const { responseFetch, setResponseFetch } = useContext(GlobalContext);
+  const history = useHistory();
   const [searchInput, setSearchInput] = useState('');
   const [option, setOption] = useState('name');
-  const { request } = useFetch();
-  const FIRST_LETTER = 'first-letter';
-  const INGREDIENTS = 'ingredients';
-  const NAME = 'name';
-  const GLOBAL = useContext(GlobalContext);
-  const history = useHistory();
-  const pageName = window.location.pathname;
+  const pageName = window.location.pathname.split('/')[1];
 
   useEffect(() => {
-    if (GLOBAL.responseFetch !== null && pageName === '/comidas') {
-      if (GLOBAL.responseFetch.meals === null) {
+    if (responseFetch && pageName === 'comidas') {
+      if (responseFetch.meals === null) {
         setSearchInput('');
-        GLOBAL.setResponseFetch(null);
+        setResponseFetch(null);
         global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-      } else if (GLOBAL.responseFetch.meals.length === 1) {
-        const { idMeal } = GLOBAL.responseFetch.meals[0];
-        history.push(`/comidas/${idMeal}`);
+      } else if (responseFetch.meals.length === 1) {
+        const { idMeal } = responseFetch.meals[0];
+        history.push(`comidas/${idMeal}`);
       }
-    } else if (GLOBAL.responseFetch !== null && pageName === '/bebidas') {
-      if (GLOBAL.responseFetch.drinks === null) {
+    } else if (responseFetch && pageName === 'bebidas') {
+      if (responseFetch.drinks === null) {
         setSearchInput('');
-        GLOBAL.setResponseFetch(null);
+        setResponseFetch(null);
         global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-      } else if (GLOBAL.responseFetch.drinks.length === 1) {
-        const { idDrink } = GLOBAL.responseFetch.drinks[0];
+      } else if (responseFetch.drinks.length === 1) {
+        const { idDrink } = responseFetch.drinks[0];
         history.push(`/bebidas/${idDrink}`);
       }
     }
-  }, [GLOBAL, history, pageName]);
+  }, [responseFetch, history, pageName, setResponseFetch]);
 
   const ifHandle = async (op, method) => {
-    if (pageName === '/comidas') {
+    if (pageName === 'comidas') {
       await request(`https://www.themealdb.com/api/json/v1/1/${method}.php?${op}=${searchInput}`);
-    } else if (pageName === '/bebidas') {
+    } else if (pageName === 'bebidas') {
       await request(`https://www.thecocktaildb.com/api/json/v1/1/${method}.php?${op}=${searchInput}`);
     }
   };
@@ -48,7 +49,7 @@ const SearchBar = () => {
     e.preventDefault();
     if (searchInput.length > 1 && option === FIRST_LETTER) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
-      GLOBAL.setResponseFetch(null);
+      await setResponseFetch(null);
       setSearchInput('');
     } else {
       switch (option) {

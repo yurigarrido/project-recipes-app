@@ -50,7 +50,7 @@ const FavoreButton = ({ data }) => {
         }
       });
     }
-  }, []);
+  }, [id]);
 
   return (
     <button

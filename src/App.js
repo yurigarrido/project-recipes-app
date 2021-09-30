@@ -2,9 +2,9 @@ import React from 'react';
 import { Switch, Route } from 'react-router';
 import GlobalStorage from './context/GlobalStorage';
 
-import { Login, Foods, Profile, Drinks, DrinkRecipe,
-  FoodRecipe, DrinkProgress, ExploreFood, Explore, ExploreDrink, ExploreFoodIng,
-  ExploreFoodArea, ExploreDrinkIng, RecipesDone, RecipesFav } from './pages';
+import { Login, Foods, Profile, Drinks, DrinkRecipe, FoodRecipe, DrinkProgress,
+  ExploreFood, Explore, ExploreDrink, ExploreFoodIng, ExploreFoodArea, ExploreDrinkIng,
+  RecipesDone, RecipesFav, FoodProgress } from './pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -20,7 +20,7 @@ function App() {
           {/* Export Foods */}
           <Route exact path="/comidas" component={ Foods } />
           <Route exact path="/comidas/:id" component={ FoodRecipe } />
-          <Route path="/comidas/:id/in-progress" component={ FoodRecipe } />
+          <Route path="/comidas/:id/in-progress" component={ FoodProgress } />
 
           {/* Export Drinks */}
           <Route exact path="/bebidas" component={ Drinks } />

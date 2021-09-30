@@ -5,20 +5,21 @@ import useFetch from '../../hooks/useFetch';
 
 const Foods = () => {
   const GLOBAL = useContext(GlobalContext);
+  const { responseFetch } = GLOBAL;
   const [isList, setIsList] = useState(false);
   const [foods, setFoods] = useState(null);
   const { request } = useFetch();
 
   useEffect(() => {
-    if (GLOBAL.responseFetch === null) {
+    if (responseFetch === null) {
       request('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     }
-  }, []);
+  }, [responseFetch, request]);
 
   useEffect(() => {
-    if (GLOBAL.responseFetch !== null) {
-      const { meals } = GLOBAL.responseFetch;
-      if (meals !== null) {
+    if (responseFetch) {
+      const { meals } = responseFetch;
+      if (meals) {
         const twelve = 12;
         setFoods(meals.slice(0, twelve));
         if (meals.length > 1) {
@@ -26,7 +27,7 @@ const Foods = () => {
         }
       }
     }
-  }, [GLOBAL]);
+  }, [responseFetch]);
 
   return (
     <div>
