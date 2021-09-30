@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import styles from './css/ingredient.module.css';
 
 const Ingredients = ({ data }) => {
   const [ingredients, setIngredients] = useState([]);
+  const [checkedIng, setCheckedIng] = useState([]);
   const [pageName, setPageName] = useState(null);
+
+  const handleChange = (position) => {
+    const updateCheckedIng = checkedIng
+      .map((ing, index) => (index === position ? !ing : ing));
+    setCheckedIng(updateCheckedIng);
+  };
 
   useEffect(() => {
     const page = window.location.pathname;
@@ -21,7 +29,6 @@ const Ingredients = ({ data }) => {
       const arrayOfIngredients = data[pageName][0];
       const arrayIng = [];
       const arrayMeas = [];
-
       // source https://stackoverflow.com/a/64509241 obrigado Deus
       Object.keys(arrayOfIngredients).forEach((key) => {
         if (key.includes('strIngredient') && (arrayOfIngredients[key])) {
@@ -31,14 +38,13 @@ const Ingredients = ({ data }) => {
           arrayMeas.push(arrayOfIngredients[key]);
         }
       });
-
       const aux = arrayIng.map((ing, index) => {
         if (!arrayMeas[index]) {
           return ing;
         }
         return `${arrayMeas[index]} - ${ing}`;
       });
-
+      setCheckedIng(Array(aux.length).fill(false));
       setIngredients(aux);
     }
   }, [data, pageName]);
@@ -47,9 +53,20 @@ const Ingredients = ({ data }) => {
     <div>
       <ul>
         { ingredients.map((ing, index) => (
-          <li key={ index } data-testid={ `${index}-ingredient-step` }>
-            <label htmlFor={ `ing-${index}` }>
-              <input type="checkbox" id={ `ing-${index}` } />
+          <li
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
+          >
+            <input
+              id={ `ing-${index}` }
+              type="checkbox"
+              checked={ checkedIng[index] }
+              onChange={ () => handleChange(index) }
+            />
+            <label
+              htmlFor={ `ing-${index}` }
+              className={ checkedIng[index] ? styles.checked : '' }
+            >
               { ing }
             </label>
           </li>
@@ -64,3 +81,5 @@ Ingredients.propTypes = {
 };
 
 export default Ingredients;
+
+// Source logic of Checkbox from https://www.freecodecamp.org/news/how-to-work-with-multiple-checkboxes-in-react/
