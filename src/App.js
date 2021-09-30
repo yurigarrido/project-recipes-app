@@ -4,11 +4,10 @@ import GlobalStorage from './context/GlobalStorage';
 
 import { Login, Foods, Profile, Drinks, DrinkRecipe, FoodRecipe, DrinkProgress,
   ExploreFood, Explore, ExploreDrink, ExploreFoodIng, ExploreFoodArea, ExploreDrinkIng,
-  RecipesDone, RecipesFav, FoodProgress } from './pages';
+  RecipesDone, RecipesFav, FoodProgress, NotFound } from './pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { NotFound } from 'http-errors';
 
 function App() {
   return (
