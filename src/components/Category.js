@@ -34,7 +34,7 @@ const Category = ({ pageName }) => {
   const { request, categories } = useFetch();
   const [aux, setAux] = useState(false);
 
-  if (aux === false) {
+  if (!aux) {
     if (pageName === 'comidas') {
       request('https://www.themealdb.com/api/json/v1/1/list.php?c=list', true);
       setAux(true);
@@ -46,7 +46,7 @@ const Category = ({ pageName }) => {
 
   useEffect(() => {
     const five = 5;
-    if (categories !== null) {
+    if (categories) {
       if (pageName === 'comidas') setCategoryList(categories.meals.slice(0, five));
       else if (pageName === 'bebidas') setCategoryList(categories.drinks.slice(0, five));
     }
@@ -64,7 +64,7 @@ const Category = ({ pageName }) => {
   return (
     <section>
       {
-        categoryList !== null && (
+        categoryList && (
           <button
             data-testid="All-category-filter"
             type="button"
@@ -75,7 +75,7 @@ const Category = ({ pageName }) => {
         )
       }
       {
-        categoryList !== null && categoryList.map((category, index) => (
+        categoryList && categoryList.map((category, index) => (
           <button
             key={ index }
             data-testid={ `${category.strCategory}-category-filter` }

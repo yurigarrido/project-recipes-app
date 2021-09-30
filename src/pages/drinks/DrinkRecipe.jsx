@@ -1,13 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import useFetchRecipe from '../../hooks/useFetchRecipe';
 import { RecipePhoto, ShareButton,
-  FavoreButton, Ingredients, Instructions,
+  FavoriteButton, Ingredients, Instructions,
   RecommendationCards, StartButton } from '../../components/detailsComponents';
 
 const DrinkRecipe = () => {
   const [showStartBtn, setShowStartBtn] = useState(true);
+  const [drinksDetails, setDrinksDetails] = useState(null);
   const { request, data } = useFetchRecipe();
   const pageId = window.location.pathname.split('/')[2];
+
+  const renderDrinkDetails = () => {
+    const arrayDetails = drinksDetails.drinks[0];
+
+    return (
+      <>
+        <RecipePhoto url={ arrayDetails.strDrinkThumb } />
+        <h2 data-testid="recipe-title">{ arrayDetails.strDrink }</h2>
+        <ShareButton />
+        <FavoriteButton data={ arrayDetails } />
+        <p data-testid="recipe-category">
+          { `${arrayDetails.strCategory} ${arrayDetails.strAlcoholic}` }
+        </p>
+        <Ingredients data={ data } />
+        <Instructions inst={ arrayDetails.strInstructions } />
+        <RecommendationCards />
+        { showStartBtn && <StartButton />}
+      </>
+    );
+  };
 
   useEffect(() => {
     if (localStorage.doneRecipes) {
@@ -18,29 +39,21 @@ const DrinkRecipe = () => {
         }
       });
     }
-  }, []);
+  }, [pageId]);
+
+  useEffect(() => {
+    if (data) {
+      setDrinksDetails(data);
+    }
+  }, [data]);
 
   useEffect(() => {
     request(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${pageId}`);
   }, [request, pageId]);
-  console.log(data);
+
   return (
     <div>
-      { data && data.drinks && (
-        <>
-          <RecipePhoto url={ data.drinks[0].strDrinkThumb } />
-          <h2 data-testid="recipe-title">{ data.drinks[0].strDrink }</h2>
-          <ShareButton />
-          <FavoreButton data={ data.drinks[0] } />
-          <p data-testid="recipe-category">
-            { `${data.drinks[0].strCategory} ${data.drinks[0].strAlcoholic}` }
-          </p>
-          <Ingredients data={ data } />
-          <Instructions inst={ data.drinks[0].strInstructions } />
-          <RecommendationCards />
-          { showStartBtn && <StartButton />}
-        </>
-      ) }
+      { drinksDetails && drinksDetails.drinks && renderDrinkDetails() }
     </div>
   );
 };

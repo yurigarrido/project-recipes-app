@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import useFetchRecipe from '../../hooks/useFetchRecipe';
 import { RecipePhoto, ShareButton,
-  FavoreButton, Ingredients, Instructions,
+  FavoriteButton, Ingredients, Instructions,
   Video, RecommendationCards, StartButton } from '../../components/detailsComponents';
 
 const FoodRecipe = () => {
-  const [showStartBtn, setShowStartBtn] = useState(true);
   const { request, data } = useFetchRecipe();
+  const [showStartBtn, setShowStartBtn] = useState(true);
+  const [foodDetails, setFoodDetails] = useState(null);
   const pageId = window.location.pathname.split('/')[2];
 
   useEffect(() => {
@@ -18,19 +19,14 @@ const FoodRecipe = () => {
         }
       });
     }
-  }, []);
+  }, [pageId]);
 
-  // const doneRecipes = [{
-  //   "id": "52771",
-  //   "type": "comida",
-  //   "area": "Italian",
-  //   "category": "Vegetarian",
-  //   "alcoholicOrNot": "",
-  //   "name": "Spicy Arrabiata Penne",
-  //   "image": "https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg",
-  //   "doneDate": "22/6/2020",
-  //   "tags": ["Pasta", "Curry"]
-  // }];
+  useEffect(() => {
+    if (data) {
+      const { meals } = data;
+      setFoodDetails(meals[0]);
+    }
+  }, [data]);
 
   useEffect(() => {
     request(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${pageId}`);
@@ -38,16 +34,16 @@ const FoodRecipe = () => {
 
   return (
     <div>
-      { data !== null && (
+      { foodDetails && (
         <>
-          <RecipePhoto url={ data.meals[0].strMealThumb } />
-          <h2 data-testid="recipe-title">{ data.meals[0].strMeal }</h2>
+          <RecipePhoto url={ foodDetails.strMealThumb } />
+          <h2 data-testid="recipe-title">{ foodDetails.strMeal }</h2>
           <ShareButton />
-          <FavoreButton data={ data.meals[0] } />
-          <p data-testid="recipe-category">{ data.meals[0].strCategory }</p>
+          <FavoriteButton data={ foodDetails } />
+          <p data-testid="recipe-category">{ foodDetails.strCategory }</p>
           <Ingredients data={ data } />
-          <Instructions inst={ data.meals[0].strInstructions } />
-          <Video url={ data.meals[0].strYoutube } />
+          <Instructions inst={ foodDetails.strInstructions } />
+          <Video url={ foodDetails.strYoutube } />
           <RecommendationCards />
         </>
       ) }

@@ -4,21 +4,21 @@ import { Header, Footer, RecipeCard, Category } from '../../components';
 import useFetch from '../../hooks/useFetch';
 
 const Drinks = () => {
-  const GLOBAL = useContext(GlobalContext);
+  const { responseFetch } = useContext(GlobalContext);
   const [isList, setIsList] = useState(false);
   const [drinksArray, setDrinksArray] = useState(null);
   const { request } = useFetch();
 
   useEffect(() => {
-    if (GLOBAL.responseFetch === null) {
+    if (responseFetch === null || responseFetch.meals) {
       request('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     }
-  }, []);
+  }, [request, responseFetch]);
 
   useEffect(() => {
-    if (GLOBAL.responseFetch !== null && GLOBAL.responseFetch !== undefined) {
-      const { drinks } = GLOBAL.responseFetch;
-      if (drinks !== null) {
+    if (responseFetch) {
+      const { drinks } = responseFetch;
+      if (drinks) {
         const twelve = 12;
         setDrinksArray(drinks.slice(0, twelve));
         if (drinks.length > 1) {
@@ -26,7 +26,7 @@ const Drinks = () => {
         }
       }
     }
-  }, [GLOBAL]);
+  }, [responseFetch]);
 
   return (
     <div>

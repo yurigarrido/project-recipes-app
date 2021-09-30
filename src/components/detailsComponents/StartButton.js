@@ -10,33 +10,31 @@ const StartButton = () => {
 
   useEffect(() => {
     if (localStorage.inProgressRecipes) {
-      const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const local = JSON.parse(localStorage.inProgressRecipes);
       if (Object.keys(local[categoryType]).includes(id)) {
         setButtonText('Continuar Receita');
       }
     }
-  }, []);
+  }, [categoryType, id]);
 
   const handleClick = () => {
-    if (!localStorage.getItem('inProgressRecipes')) {
+    if (!localStorage.inProgressRecipes) {
       if (category === 'comidas') {
-        localStorage.setItem(
-          'inProgressRecipes',
-          JSON.stringify({ cocktails: {}, meals: { [id]: [] } }),
+        localStorage.inProgressRecipes = JSON.stringify(
+          { cocktails: {}, meals: { [id]: [] } },
         );
       } else {
-        localStorage.setItem(
-          'inProgressRecipes',
-          JSON.stringify({ cocktails: { [id]: [] }, meals: {} }),
+        localStorage.inProgressRecipes = JSON.stringify(
+          { cocktails: { [id]: [] }, meals: {} },
         );
       }
     } else {
-      const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      localStorage.setItem(
-        'inProgressRecipes',
-        JSON.stringify({
-          ...local, [categoryType]: { ...local[categoryType], [id]: [] },
-        }),
+      const local = JSON.parse(localStorage.inProgressRecipes);
+      localStorage.inProgressRecipes = JSON.stringify(
+        {
+          ...local,
+          [categoryType]: { ...local[categoryType], [id]: [] },
+        },
       );
     }
   };

@@ -18,10 +18,10 @@ const RecommendationCards = () => {
       request('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       setRecomendation('meals');
     }
-  }, []);
+  }, [request]);
 
   useEffect(() => {
-    if (data !== null && recomendationName !== null) {
+    if (data && recomendationName) {
       setCaroulsel(data[recomendationName]);
     }
   }, [data, recomendationName, caroulsel]);
@@ -29,8 +29,7 @@ const RecommendationCards = () => {
   return (
     <div className={ styles.carousel }>
       {
-        (caroulsel !== undefined && caroulsel !== null)
-        && caroulsel.slice(0, six).map((el, index) => (
+        caroulsel && caroulsel.slice(0, six).map((el, index) => (
           <div
             data-testid={ `${index}-recomendation-card` }
             key={ index }
