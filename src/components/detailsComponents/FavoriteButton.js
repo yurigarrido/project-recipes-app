@@ -25,17 +25,17 @@ const FavoreButton = ({ data }) => {
   const handleClick = (() => {
     const recipeData = recipeDataAux(data, id, categoryType);
     if (!localStorage.favoriteRecipes) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([recipeData]));
+      localStorage.favoriteRecipes = JSON.stringify([recipeData]);
       setFav(true);
     } else {
-      const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const local = JSON.parse(localStorage.favoriteRecipes);
       if (!fav) {
-        localStorage.setItem('favoriteRecipes', JSON.stringify([...local, recipeData]));
+        localStorage.favoriteRecipes = JSON.stringify([...local, recipeData]);
         setFav(true);
       } else {
         const index = local.findIndex((i) => i.id === id);
         local.splice(index, 1);
-        localStorage.setItem('favoriteRecipes', JSON.stringify(local));
+        localStorage.favoriteRecipes = JSON.stringify(local);
         setFav(false);
       }
     }
@@ -43,7 +43,7 @@ const FavoreButton = ({ data }) => {
 
   useEffect(() => {
     if (localStorage.favoriteRecipes) {
-      const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const local = JSON.parse(localStorage.favoriteRecipes);
       local.forEach((recipe) => {
         if (recipe.id === id) {
           setFav(true);

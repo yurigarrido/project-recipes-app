@@ -4,14 +4,13 @@ import { GlobalContext } from '../../context/GlobalStorage';
 import useFetch from '../../hooks/useFetch';
 
 const Foods = () => {
-  const GLOBAL = useContext(GlobalContext);
-  const { responseFetch } = GLOBAL;
+  const { responseFetch } = useContext(GlobalContext);
   const [isList, setIsList] = useState(false);
   const [foods, setFoods] = useState(null);
   const { request } = useFetch();
 
   useEffect(() => {
-    if (responseFetch === null) {
+    if (responseFetch === null || responseFetch.drinks) {
       request('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     }
   }, [responseFetch, request]);

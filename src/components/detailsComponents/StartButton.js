@@ -15,10 +15,10 @@ const StartButton = () => {
         setButtonText('Continuar Receita');
       }
     }
-  }, []);
+  }, [categoryType, id]);
 
   const handleClick = () => {
-    if (!localStorage.getItem('inProgressRecipes')) {
+    if (!localStorage.inProgressRecipes) {
       if (category === 'comidas') {
         localStorage.setItem(
           'inProgressRecipes',

@@ -7,9 +7,9 @@ import mealIcon from '../images/mealIcon.svg';
 import '../App.css';
 
 const Footer = () => {
-  const GLOBAL = useContext(GlobalContext);
+  const { setResponseFetch } = useContext(GlobalContext);
   const handleClick = () => {
-    GLOBAL.setResponseFetch(null);
+    setResponseFetch(null);
   };
 
   return (

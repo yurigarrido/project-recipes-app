@@ -17,24 +17,23 @@ const Ingredients = ({ data }) => {
   }, [pageName]);
 
   useEffect(() => {
-    if (data !== null && pageName !== null) {
+    if (data && pageName) {
+      const arrayOfIngredients = data[pageName][0];
       const arrayIng = [];
       const arrayMeas = [];
 
       // source https://stackoverflow.com/a/64509241 obrigado Deus
-      Object.keys(data[pageName][0]).forEach((key) => {
-        if (key.includes('strIngredient') && (data[pageName][0][key] !== null
-          && data[pageName][0][key] !== '' && data[pageName][0][key] !== undefined)) {
-          arrayIng.push(data[pageName][0][key]);
+      Object.keys(arrayOfIngredients).forEach((key) => {
+        if (key.includes('strIngredient') && (arrayOfIngredients[key])) {
+          arrayIng.push(arrayOfIngredients[key]);
         }
-        if (key.includes('strMeasure') && (data[pageName][0][key] !== null
-          && data[pageName][0][key] !== '' && data[pageName][0][key] !== undefined)) {
-          arrayMeas.push(data[pageName][0][key]);
+        if (key.includes('strMeasure') && (arrayOfIngredients[key])) {
+          arrayMeas.push(arrayOfIngredients[key]);
         }
       });
 
       const aux = arrayIng.map((ing, index) => {
-        if (arrayMeas[index] === undefined) {
+        if (!arrayMeas[index]) {
           return ing;
         }
         return `${arrayMeas[index]} - ${ing}`;
