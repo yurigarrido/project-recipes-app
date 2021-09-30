@@ -8,6 +8,7 @@ import { Login, Foods, Profile, Drinks, DrinkRecipe, FoodRecipe, DrinkProgress,
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { NotFound } from 'http-errors';
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
           {/* Export Recipes */}
           <Route path="/receitas-feitas" component={ RecipesDone } />
           <Route path="/receitas-favoritas" component={ RecipesFav } />
+
+          {/* <Route component={ NotFound } /> */}
         </GlobalStorage>
       </Switch>
     </div>
