@@ -30,9 +30,9 @@ const Login = () => {
       email,
     };
 
-    localStorage.setItem('mealsToken', '1');
-    localStorage.setItem('cocktailsToken', '1');
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.mealsToken = JSON.stringify(1);
+    localStorage.cocktailsToken = JSON.stringify(1);
+    localStorage.user = JSON.stringify(user);
 
     history.push('/comidas');
   };
