@@ -47,9 +47,9 @@ const SearchBar = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (searchInput.length > 1 && option === FIRST_LETTER) {
+      global.alert('Sua busca deve conter somente 1 (um) caracter');
       GLOBAL.setResponseFetch(null);
       setSearchInput('');
-      global.alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
       switch (option) {
       case INGREDIENTS:
