@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, NotFoundRoute } from 'react-router';
+import { Switch, Route } from 'react-router';
 import GlobalStorage from './context/GlobalStorage';
 
 import { Login, Foods, Profile, Drinks, DrinkRecipe, FoodRecipe, DrinkProgress,
@@ -30,10 +30,18 @@ function App() {
           {/* Export Explore */}
           <Route exact path="/explorar" component={ Explore } />
           <Route exact path="/explorar/comidas" component={ ExploreFood } />
-          <Route exact path="/explorar/comidas/ingredientes" component={ ExploreFoodIng } />
+          <Route
+            exact
+            path="/explorar/comidas/ingredientes"
+            component={ ExploreFoodIng }
+          />
           <Route exact path="/explorar/comidas/area" component={ ExploreFoodArea } />
           <Route exact path="/explorar/bebidas" component={ ExploreDrink } />
-          <Route exact path="/explorar/bebidas/ingredientes" component={ ExploreDrinkIng } />
+          <Route
+            exact
+            path="/explorar/bebidas/ingredientes"
+            component={ ExploreDrinkIng }
+          />
 
           {/* Export Recipes */}
           <Route exact path="/receitas-feitas" component={ RecipesDone } />
