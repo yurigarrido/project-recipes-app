@@ -30,7 +30,12 @@ const DoneCard = ({ recipesDone }) => (
         </Link>
         <p data-testid={ `${index}-horizontal-done-date` }>{ recipe.doneDate }</p>
         { recipe.tags.map((tag) => (
-          <span key={ tag } data-testid={ `${index}-${tag}-horizontal-tag` }>{ tag }</span>
+          <span
+            key={ tag }
+            data-testid={ `${index}-${tag}-horizontal-tag` }
+          >
+            { tag }
+          </span>
         )) }
         <ShareButton type={ recipe.type } id={ recipe.id } index={ index } />
       </div>
