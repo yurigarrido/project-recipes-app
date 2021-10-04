@@ -1,4 +1,4 @@
-const localRecipeProgress = (category, id, array = []) => {
+const localRecipeProgress = (category, id, array = null) => {
   const categoryType = category === 'comidas' ? 'meals' : 'cocktails';
 
   if (!localStorage.inProgressRecipes) {
@@ -14,16 +14,18 @@ const localRecipeProgress = (category, id, array = []) => {
     }
   } else {
     const local = JSON.parse(localStorage.inProgressRecipes);
-    localStorage.inProgressRecipes = JSON.stringify(
-      {
-        ...local,
-        [categoryType]: {
-          ...local[categoryType],
-          [id]: [...local[categoryType][id],
-            array],
+    if (array) {
+      localStorage.inProgressRecipes = JSON.stringify(
+        {
+          ...local,
+          [categoryType]: {
+            ...local[categoryType],
+            [id]: [...local[categoryType][id],
+              array],
+          },
         },
-      },
-    );
+      );
+    }
   }
 };
 

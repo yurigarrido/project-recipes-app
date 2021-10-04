@@ -29,6 +29,7 @@ const functionTest = (data, pageName, setCheckedIng, setIngredients) => {
     }
   });
   const aux = arrayIng.map((ing, index) => {
+  /* console.log(arrayMeas[index], ing); */
     if (!arrayMeas[index]) {
       return ing;
     }
